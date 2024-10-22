@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ShoppingBag, TrendingUp, Truck } from 'lucide-react'
 import { collection, getDocs, limit, query } from 'firebase/firestore'
-import { db } from '../DB/Firebase' // Asegúrate de que la ruta sea correcta
+import { db } from '../DB/Firebase'
 
 function Home() {
   const [featuredProducts, setFeaturedProducts] = useState([])
@@ -11,13 +11,12 @@ function Home() {
     const fetchFeaturedProducts = async () => {
       try {
         const productsRef = collection(db, 'products')
-        const q = query(productsRef, limit(8)) // Fetch 8 products to have a pool to choose from
+        const q = query(productsRef, limit(8))
         const querySnapshot = await getDocs(q)
         const products = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         }))
-        // Shuffle the array and take the first 4
         const shuffled = products.sort(() => 0.5 - Math.random())
         setFeaturedProducts(shuffled.slice(0, 4))
       } catch (error) {
@@ -30,7 +29,6 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
         <div className="container mx-auto px-6 py-16 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">Bienvenido a Nuestra Tienda</h1>
@@ -41,7 +39,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-16">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-8">Por qué elegirnos</h2>
@@ -65,7 +62,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Featured Products Section */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-8">Productos Destacados</h2>
